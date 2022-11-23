@@ -1,0 +1,10 @@
+
+.background{
+  background-image: url('../images/blue-background.jpg');
+  border:1px solid transparent;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+ 
+

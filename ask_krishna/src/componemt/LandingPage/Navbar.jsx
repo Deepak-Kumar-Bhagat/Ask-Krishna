@@ -13,15 +13,26 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import krishnalogo from '../images/krishnalogo.png';
+import krishnalogo from '../../images/krishnalogo.png';
+import pattern from '../../images/pattern.png';
+import { Link } from "react-scroll";
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Home', 'About', 'Chapters','Question','Quotes','Contact Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const chapter= ['Chapter 1','Chapter 2','Chapter 3','Chapter 4','Chapter 5','Chapter 6','Chapter 7','Chapter 8','Chapter 9','Chapter 10','Chapter 11','Chapter 12','Chapter 13','Chapter 14','Chapter 15','Chapter 16','Chapter 17','Chapter 18']
 
 function Navbar() {
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElChapter, setAnchorElChapter] = React.useState(null);
+
+  const handleOpenChapter = (event) => {
+    setAnchorElChapter(event.currentTarget);
+  };
+  const handleCloseChapter = (event) => {
+    setAnchorElChapter(null);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,8 +50,9 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" style={{ background: 'transparent',backgroundColor:"rgba(248, 250, 252,.7)"}}>
-      <Container maxWidth="xl">
+    <AppBar position="static" style={{}}>
+      {/* "rgba(248, 250, 252,.7)" */}
+      <Container maxWidth="xl" className="navbar" sx={{backgroundColor:"rgb(160,78,78)",padding:"7px 10px"}}>
         <Toolbar disableGutters>
            <Box sx={{padding:"0.5% 0%"}}>
              <img src={krishnalogo} style={{width:"80px",margin:"0px 0px 0px 0px"}}></img>
@@ -49,7 +61,7 @@ function Navbar() {
             sx={{
               fontWeight: 700,
               letterSpacing: '.2rem',
-              color: '#800000',
+              color: 'rgb(254,218,106)',
               textDecoration: 'none',
               textAlign:"center",
               fontSize:"8px",
@@ -59,7 +71,7 @@ function Navbar() {
             ASK KRISHNA
           </Typography>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -67,7 +79,7 @@ function Navbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              sx={{color:"#a04e4e",margin:"0px 0px 0px 5px"}}
+              sx={{color:"rgb(240,227,227)",margin:"0px 0px 0px 5px"}}
             >
               <MenuIcon />
             </IconButton>
@@ -96,18 +108,72 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
          
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:"30px" }}>
+
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+              Home  
+            </Button>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+              About  
+            </Button>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+              onClick={handleOpenChapter}  
+            >
+              Chapters  
+            </Button>
+             <Menu
+              sx={{ mt: '60px',ml:"50px"}}
+              id="menu-appbar"
+              anchorEl={anchorElChapter}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElChapter)}
+              onClose={handleCloseChapter}
+            >
+            <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 12px",overflow:"hidden"}}>
+              {chapter.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{}}>
+                  <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px 40px"}}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Box>
+            </Menu>
+            
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+              Questions  
+            </Button>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+              Duotes  
+            </Button>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+              Contact Us 
+            </Button>
+
+            {/* {pages.map((page) => (
+            <Link to={`${page}`}
+              activeClass="active"
+              spy={true}
+              smooth={true}
+              offset={-100}
+              duration={1000}
+              >
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{mx:1,color: '#a04e4e', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+                sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
               >
                 {page}
               </Button>
-            ))}
+            </Link>
+            ))} */}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

@@ -4,11 +4,13 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import krishnalogo from '../images/krishnaimage1.png';
-import krishnalogo1 from '../images/krishnaimage2.png';
+import krishnalogo from '../../images/krishnaimage1.png';
+import krishnalogo1 from '../../images/krishnaimage2.png';
 import { Button, Input, Stack, TextField, Typography } from '@mui/material'; 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import '../css/universal.css';
+import '../../css/universal.css';
+import krishnalogo3 from '../../images/krishnalogo.png';
+import { Link } from "react-scroll";
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing()
@@ -17,9 +19,9 @@ const Item = styled(Paper)(({ theme }) => ({
 function Home() {
   return (
     <div>  
-        <Navbar/>
+      <Navbar/>
       <div className='background'>
-        <Box sx={{backgroundColor:"rgba(248, 250, 252,.7)"}}>
+        <Box sx={{}}>
         <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
                 <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
@@ -39,15 +41,16 @@ function Home() {
                 </Box>
             </Grid>
         </Grid>
-         <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",backgroundColor:"rgba(248, 250, 252,.9)"}}>
+       
+         <Box id="About" className="" sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",backgroundColor:"rgb(227,217,191,0.4)"}}>
                     <Box sx={{padding:"4%",boxShadow:"0px 0px 5px gray",textAlign:"center"}}>
                     <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.3rem"}}>About</Typography>
                     <Box sx={{width:'115px',margin:"5px auto",border:"2px solid #a04e4e"}}></Box>
-                    <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"18px",marginTop:"30px"}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat</Typography>
+                    <Typography >Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat</Typography>
                     </Box>
                 </Box>
         </Box>
-        <Box sx={{backgroundColor:"rgba(248, 250, 252,.7)"}}>
+        <Box id="Contact Us" sx={{}}>
         <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
                 <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
@@ -75,6 +78,30 @@ function Home() {
                 </Box>
             </Grid>
         </Grid>
+
+         <Box sx={{backgroundColor:"#d4ad76",padding:"5% 10%"}}>
+         <Grid container spacing={4}>
+            <Grid item xs={12} sm={12} md={6} lg={4}>
+                <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"#d4ad76"}}>
+                   <img src={krishnalogo3} style={{width:"77%",marginTop:"0%"}}></img>
+                </Box>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={8}>
+                <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 0px",background:"transparent"}}>
+                  <Box sx={{padding:"0%",textAlign:"left"}}>
+                   <Typography sx={{color:"#55503d",fontFamily: 'PT Serif',fontSize:"25px",fontWeight:"540",letterSpacing:"0.2rem",marginBottom:"2%"}}>Ask Krishna.in</Typography>
+                   <Typography sx={{color:"#5c5a54",fontFamily: 'Serif',fontSize:"16px"}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in </Typography>
+                  </Box>
+                </Box>
+            </Grid>
+        </Grid>
+        </Box>
+
+        <Stack justifyContent="center" alignItems="center" sx={{padding:"2% 0%",backgroundColor:"rgba(85,69,47)"}}>
+          <Typography sx={{color:"#907d4d"}}><a href='' className="footerLink">Terms & Conditions</a> | <a href='' className="footerLink">Privacy Policy</a> | <a href='' className="footerLink">Cancellation Policy</a></Typography>
+          <Typography sx={{color:"#907d4d",marginTop:"0.5%"}}>©2022 Ask Krishna. All rights Reserved.</Typography>
+        </Stack>
+
         </Box>
       </div>
     </div>

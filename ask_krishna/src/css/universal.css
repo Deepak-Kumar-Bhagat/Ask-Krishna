@@ -1,10 +1,24 @@
+.navbar{
+  background-image: url('../images/pattern.png');
+  background-attachment: fixed;
+}
 
 .background{
-  background-image: url('../images/blue-background.jpg');
+  background-image: url('../images/download.jpeg');
   border:1px solid transparent;
-  background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
+}
+
+.footerLink{
+  color:#907d4d;
+  text-decoration:none;
+}
+
+.footerLink:hover{
+  text-decoration:underline;
 }
  
+::-webkit-scrollbar {
+  display: none;
+}
 

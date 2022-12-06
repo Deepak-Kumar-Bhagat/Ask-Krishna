@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import Navbar from '../Navbar'
-import floral from '../../../images/floral-decor.png';
+import Navbar from '../LandingPage/Navbar'
+import floral from '../../images/floral-decor.png';
 
 function chapterMainPage() {
   return (

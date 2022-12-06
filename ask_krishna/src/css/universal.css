@@ -17,6 +17,16 @@
 .footerLink:hover{
   text-decoration:underline;
 }
+
+.adminLink{
+  color:#907d4d;
+  text-decoration:none;
+}
+
+.adminLink:hover{
+  text-decoration:none;
+  color:#a04e4e
+}
  
 ::-webkit-scrollbar {
   display: none;

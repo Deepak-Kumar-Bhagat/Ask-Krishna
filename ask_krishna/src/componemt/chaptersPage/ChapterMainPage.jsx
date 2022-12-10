@@ -73,7 +73,7 @@ function ChapterMainPage() {
                       alignItems:"center",
                       width: "70%",
                       height:"49px",
-                      borderRadius:"8px 8px 0px 0px",
+                      borderRadius:"8px 8px 0px 0px", 
                       display:'flex',
                       cursor:"pointer",
                       border: curPage==3?"1.5px solid rgb(160,78,78)":"1px solid rgb(201,164,112)",

@@ -50,7 +50,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" style={{}}>
+    <AppBar position="sticky" style={{}}>
       {/* "rgba(248, 250, 252,.7)" */}
       <Container maxWidth="xl" className="navbar" sx={{backgroundColor:"rgb(160,78,78)",padding:"7px 10px"}}>
         <Toolbar disableGutters>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { styled } from '@mui/material/styles';
@@ -11,12 +11,22 @@ import { Button, Input, Stack, TextField, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import '../../css/universal.css';
 import { Link } from "react-scroll";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing()
 }));
 
 function Home() {
+
+  useEffect(() => {
+    AOS.init({
+      offset:350,
+      duration:1000,
+    });
+  }, [])
+
   return (
     <div> 
 
@@ -28,14 +38,14 @@ function Home() {
 
           {/* Explore Section */}
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
+            <Grid  item xs={12} sm={12} md={6} lg={6}>
+              <Box data-aos="zoom-in-right" sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
                 <img src={krishnalogo} style={{width:"100%",paddingTop:"40px"}}></img>
               </Box>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 40px",background:"transparent"}}>
-                <Box sx={{padding:"8%",boxShadow:"0px 0px 5px gray"}}>
+                <Box  data-aos="zoom-in-left" sx={{padding:"8%",boxShadow:"0px 0px 5px gray"}}>
                   <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540"}}>Ask Krishna</Typography>
                   <Box sx={{width:'115px',margin:"2px 35px 13px 35px",border:"2px solid #a04e4e"}}></Box>
                   <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"18px"}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat Geeta.</Typography>
@@ -52,7 +62,7 @@ function Home() {
             <Box sx={{padding:"4%",boxShadow:"0px 0px 5px gray",textAlign:"center"}}>
               <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.3rem"}}>About</Typography>
               <Box sx={{width:'115px',margin:"5px auto",border:"2px solid #a04e4e"}}></Box>
-              <Typography sx={{color:"#666666",fontFamily:'Raleway',fontSize:"18px",marginTop:"20px"}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat</Typography>
+              <Typography data-aos="fade-up" sx={{color:"#666666",fontFamily:'Raleway',fontSize:"18px",marginTop:"20px"}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat</Typography>
             </Box>
           </Box>
 
@@ -63,12 +73,12 @@ function Home() {
           {/* Contact Us Section */}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
+              <Box data-aos="zoom-in-right" sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
                 <img src={krishnalogo1} style={{width:"100%",margin:"100px 40px 0px 80px"}}></img>
               </Box>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 40px",background:"transparent"}}>
+              <Box data-aos="fade-left" sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 40px",background:"transparent"}}>
                 <Box sx={{padding:"8%",boxShadow:"0px 0px 5px gray",textAlign:"center"}}>
                   <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.2rem"}}>Contact Us</Typography>
                   <Box sx={{width:'115px',margin:"5px auto",border:"2px solid #a04e4e"}}></Box>

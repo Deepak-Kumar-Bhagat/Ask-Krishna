@@ -8,8 +8,24 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 function ShlokaOverview() {
+
+  const onPlayerReady: YouTubeProps['onReady'] = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  }
+
+  const opts: YouTubeProps['opts'] = {
+    height: "500",
+    width: '800',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+    },
+  };
+
   return (
     <div>
         <Navbar/>
@@ -33,7 +49,12 @@ function ShlokaOverview() {
                 </Box>
 
                 <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"25px",letterSpacing:"4px",marginBottom:"20px"}}>VERSE 1</Typography>
-                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",marginBottom:"20px"}}>श्रीभगवानुवाच |इमं विवस्वते योगं प्रोक्तवानहमव्ययम् |विवस्वान्मनवे प्राह मनुरिक्ष्वाकवेऽब्रवीत् ॥1॥</Typography>
+
+                <Box sx={{margin:"40px 0px",height:"500px"}}>
+                  <YouTube videoId="vBJ5HSs-N9o" opts={opts} onReady={onPlayerReady} />
+                </Box>
+
+                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",margin:"20px 0px"}}>श्रीभगवानुवाच |इमं विवस्वते योगं प्रोक्तवानहमव्ययम् |विवस्वान्मनवे प्राह मनुरिक्ष्वाकवेऽब्रवीत् ॥1॥</Typography>
                 
                 <Stack sx={{justifyContent:"center",alignItems:"center",marginBottom:"20px"}}>
                     <Box sx={{backgroundColor:"#a04e4e",justifyContent:"center",alignItems:"center",display:"flex",border:"1.5px solid lightgray",cursor:"pointer",borderRadius:"50%",padding:"1%","&:hover":{boxShadow:"0px 0px 5px #a04e4e",border:"none"}}}>

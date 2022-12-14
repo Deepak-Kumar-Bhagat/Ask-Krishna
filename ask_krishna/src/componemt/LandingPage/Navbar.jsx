@@ -12,20 +12,32 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import LanguageIcon from '@mui/icons-material/Language';
 
 import krishnalogo from '../../images/krishnalogo.png';
 import pattern from '../../images/pattern.png';
 import { Link } from "react-scroll";
 
 const pages = ['Home', 'About', 'Chapters','Question','Quotes','Contact Us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Favourite Verses', 'Favourite Quotes', 'Logout'];
+const language = ['English','Hindi'];
 const chapter= ['Chapter 1','Chapter 2','Chapter 3','Chapter 4','Chapter 5','Chapter 6','Chapter 7','Chapter 8','Chapter 9','Chapter 10','Chapter 11','Chapter 12','Chapter 13','Chapter 14','Chapter 15','Chapter 16','Chapter 17','Chapter 18']
 
 function Navbar() {
 
+  const [user,setUser]=React.useState(true);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElChapter, setAnchorElChapter] = React.useState(null);
+  const [anchorElLanguage, setAnchorElLanguage] = React.useState(null);
+
+  const handleOpenLanguage = (event) => {
+    setAnchorElLanguage(event.currentTarget);
+  };
+  const handleCloseLanguage = (event) => {
+    setAnchorElLanguage(null);
+  };
 
   const handleOpenChapter = (event) => {
     setAnchorElChapter(event.currentTarget);
@@ -140,7 +152,7 @@ function Navbar() {
             >
             <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 12px",overflow:"hidden"}}>
               {chapter.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{}}>
+                <MenuItem key={setting} onClick={handleCloseChapter} sx={{}}>
                   <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px 40px"}}>{setting}</Typography>
                 </MenuItem>
               ))}
@@ -151,7 +163,7 @@ function Navbar() {
               Questions  
             </Button>
             <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
-              Duotes  
+              Quotes  
             </Button>
             <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
               Contact Us 
@@ -175,9 +187,42 @@ function Navbar() {
             </Link>
             ))} */}
           </Box>
-
+          
+          <Box>
+            <LanguageIcon onClick={handleOpenLanguage} sx={{color:'rgb(240,227,227)',fontSize:"35px",mx:user?4:3,cursor:"pointer",marginTop:"3px"}}/>
+          </Box>
+          <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElLanguage}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElLanguage)}
+              onClose={handleCloseLanguage}
+            >
+            <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 8px",overflow:"hidden"}}>
+              {language.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseLanguage} sx={{}}>
+                  <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px",textAlign:"center",width:"100%"}}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Box>
+          </Menu>
+          
+          {user==false?
+          <Button sx={{color: 'rgb(240,227,227)',display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+            Login
+          </Button>
+          :
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
@@ -198,13 +243,21 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+            <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 8px",overflow:"hidden"}}>
               {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{}}>
+                  <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px",textAlign:"center",width:"100%"}}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Box>
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica'}}>{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
+          }
         </Toolbar>
       </Container>
     </AppBar>

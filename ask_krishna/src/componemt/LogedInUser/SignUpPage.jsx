@@ -18,7 +18,7 @@ function SignUpPage() {
                   <Box sx={{width:'115px',margin:"5px auto",border:"2px solid #a04e4e"}}></Box>
                   
                   <form>
-                  <Box sx={{display:"flex",justifyContent:"center",margin:"20px 0px 0px 0px"}}>
+                  <Box sx={{display:"flex",justifyContent:"center",margin:"35px 0px 0px 0px"}}>
                     <Stack directio="col" spacing={4} sx={{width:"600px"}}>
                         <TextField variant="standard" color="error" focused placeholder="Your Name *" required type="string" sx={{Color:'#ff8c00'}} />
                         <TextField variant="standard" color="error" focused placeholder="Your Email *" required type="email" sx={{color:'#ff8c00'}} />
@@ -31,7 +31,7 @@ function SignUpPage() {
                    </Box>
                    </form>
 
-                   <Typography sx={{color:"#666666",fontFamily:'Helvetica',fontSize:"18px",marginTop:"30px",letterSpacing:"2px",fontWeight:"500"}}>Already have an account ? <a href='' className="footerLink" style={{color:"#a04e4e"}}> Login</a></Typography>
+                   <Typography sx={{color:"#666666",fontFamily:'Helvetica',fontSize:"18px",marginTop:"30px",letterSpacing:"2px",fontWeight:"500"}}>Already have an account ? <a href='/user-login' className="footerLink" style={{color:"#a04e4e"}}> Login</a></Typography>
                 </Box>
               </Box>
         </div>

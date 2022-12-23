@@ -7,24 +7,72 @@ import Footer from '../LandingPage/Footer';
 import ChapterMainSummary from './ChapterMainSummary';
 import ChapterMainSlokas from './ChapterMainSlokas';
 import ChapterMainHighlight from './ChapterMainHighlight';
+import { useLocation, useParams } from 'react-router-dom';
+import { Apiaddress } from '../../utility';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-function ChapterMainPage() {
-
+function ChapterMainPage({chapterTrigger}) {
+  
+  const chapterId = useParams().id;
   const [curPage, setCurPage] = useState(1);
+  const [chapter, setChapter] = useState({});
+  const [verse,setVerse] = useState([]);
+  const [sloka,setSlokaList]=useState([]);
+
+  const getChapterSlokaList=async ()=>{
+    try{
+      let temp=[];
+      for(let i=0;i<verse.length;i++){
+        const url=Apiaddress + "/sloka/"+verse[i];
+        const res = await axios.get(url, {});
+        // console.log(res?.data?.data[0]);
+        temp.push(res?.data?.data[0]);
+      }
+      setSlokaList(temp);
+    }catch(err){
+      console.log(err);
+    }
+    }
+
+  useEffect(()=>{
+    getChapterSlokaList();
+  },[verse])
+
+
+  const fetchChapter=async ()=>{
+    try{
+      const url=Apiaddress + "/chapter/"+chapterId;
+      const res = await axios.get(url, {});
+      // console.log(res?.data?.data[0]);
+      setChapter(res?.data?.data[0]);
+      setVerse(res?.data?.data[0].verse);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  React.useEffect(()=>{
+    fetchChapter();
+  },[chapterTrigger])
+
 
   return (
         <div>
-          <Navbar/>
+          {/* <Navbar
+           setChapterTrigger={setTrigger}
+           chapterTrigger={trigger}
+          /> */}
           <div className='background'>
             <Box sx={{border:"1px solid red",textAlign:"center",padding:"3% 5%"}}>
-                <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"30px",color:"#a04e4e"}}>C H A P T E R  1</Typography>
+                <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"30px",color:"#a04e4e"}}>{`C H A P T E R  ${chapter?.chapterNo}`}</Typography>
                 <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
                    <Typography sx={{color:"rgb(201,164,112)",marginRight:"10px"}}>==========</Typography>
                    <img src={floral} style={{width:"5%",paddingTop:"0px"}}></img>
                    <Typography sx={{color:"rgb(201,164,112)",marginLeft:"10px"}}>==========</Typography>
                 </Box>
-                <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px"}}>Karma yoga</Typography>
-                <Typography sx={{color:"#666666",fontFamily: 'Raleway'}}>Ask any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubt/confusion from krishna and </Typography>
+                <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px"}}>{chapter?.chapterName}</Typography>
+                <Typography sx={{color:"#666666",fontFamily: 'Raleway'}}>{chapter?.chapterIntro}</Typography>
 
                 <Box sx={{ width: "90%", margin: "70px auto 25px auto" }}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -86,13 +134,19 @@ function ChapterMainPage() {
                    
                   <Box sx={{width: "100%", margin: "auto",height:"550px",overflowY:"scroll"}}>
                     {curPage === 1 && (
-                      <ChapterMainSummary/> 
+                      <ChapterMainSummary
+                      summary={chapter?.chapterSummary}
+                      /> 
                     )}
                     {curPage === 2 && (
-                      <ChapterMainSlokas/>
+                      <ChapterMainSlokas
+                      sloka={sloka}
+                      />
                     )}
                     {curPage === 3 && (
-                      <ChapterMainHighlight/>
+                      <ChapterMainHighlight
+                      highlight={chapter?.chapterHighlight}
+                      />
                     )}
                   </Box>
 

@@ -13,19 +13,38 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LanguageIcon from '@mui/icons-material/Language';
+import { Apiaddress } from '../../utility';
 
 import krishnalogo from '../../images/krishnalogo.png';
 import pattern from '../../images/pattern.png';
 import { Link } from "react-scroll";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 
 const pages = ['Home', 'About', 'Chapters','Question','Quotes','Contact Us'];
-const settings = ['Profile', 'Favourite Verses', 'Favourite Quotes', 'Logout'];
+// const settings = ['Profile', 'Favourite Verses', 'Favourite Quotes', 'Logout'];
 const language = ['English','Hindi'];
-const chapter= ['Chapter 1','Chapter 2','Chapter 3','Chapter 4','Chapter 5','Chapter 6','Chapter 7','Chapter 8','Chapter 9','Chapter 10','Chapter 11','Chapter 12','Chapter 13','Chapter 14','Chapter 15','Chapter 16','Chapter 17','Chapter 18']
 
-function Navbar() {
+function Navbar({chapterTrigger,setChapterTrigger}) {
 
-  const [user,setUser]=React.useState(true);
+ let userdata = JSON.parse( localStorage.getItem('user') );
+
+  const navigate=useNavigate();
+
+  const [settings,setSettings] = useState([]);
+  const [landingPage,setLandingPage]=React.useState(false);
+
+  React.useEffect(()=>{
+    if(userdata && userdata?.role==="user"){
+      let arr=['Profile', 'Favourite Verses', 'Favourite Quotes', 'Logout'];
+      setSettings(arr);
+    }
+    else{
+      let arr=['Profile', 'Favourite Verses', 'Favourite Quotes','Dashboard', 'Logout'];
+      setSettings(arr);
+    }
+  },[chapterTrigger])
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -43,6 +62,7 @@ function Navbar() {
     setAnchorElChapter(event.currentTarget);
   };
   const handleCloseChapter = (event) => {
+    setChapterTrigger(!chapterTrigger)
     setAnchorElChapter(null);
   };
 
@@ -60,6 +80,43 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const [chapterList,setChapterList]=useState([]);
+  const [trigger,setTrigger]=useState(false);
+
+  const fetchChapterList=async ()=>{
+    try{
+      const url=Apiaddress + "/chapter/chaptercount";
+      const res = await axios.get(url, {});
+      // console.log(res?.data?.data);
+      setChapterList(res?.data?.data);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  React.useEffect(()=>{
+    fetchChapterList();
+  },[])
+
+  const userDelete=async()=>{
+    try{
+      const url=Apiaddress + "/user/logout";
+      const res = await axios.get(url, {});
+      console.log(res?.data?.data);
+      localStorage.removeItem('user');
+      setChapterTrigger(!chapterTrigger);
+      setSettings([]);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const userSubmit=(setting)=>{
+    if(setting==="Logout"){
+      userDelete();
+    }
+  }
 
   return (
     <AppBar position="sticky" style={{}}>
@@ -123,12 +180,33 @@ function Navbar() {
          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:"30px" }}>
 
-            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+            <Link to="Home" 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={1300}>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+            onClick={()=>{
+              navigate('/');
+            }}
+            >
               Home  
             </Button>
-            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
-              About  
-            </Button>
+            </Link>
+            <Link to="About" 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={1300}>
+              <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+              onClick={(e)=>{
+                e.stopPropagation();
+                navigate('/about-us');
+              }}
+              >
+                About  
+              </Button>
+            </Link>
             <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
               onClick={handleOpenChapter}  
             >
@@ -149,26 +227,38 @@ function Navbar() {
               }}
               open={Boolean(anchorElChapter)}
               onClose={handleCloseChapter}
-            >
+              >
             <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 12px",overflow:"hidden"}}>
-              {chapter.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseChapter} sx={{}}>
-                  <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px 40px"}}>{setting}</Typography>
+              {chapterList?.map((chapter) => (
+                <MenuItem key={chapter?.chapterNo} onClick={()=>{handleCloseChapter();navigate(`/chapter-main-page/${chapter.chapterNo}`)}} sx={{}}>
+                  <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px 40px"}}>{`Chapter ${chapter?.chapterNo}`}</Typography>
                 </MenuItem>
               ))}
             </Box>
             </Menu>
             
-            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
+            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+              onClick={()=>{navigate('/question-page')}}
+            >
               Questions  
             </Button>
             <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
               Quotes  
             </Button>
-            <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
-              Contact Us 
-            </Button>
-
+            <Link to="Contact Us" 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={1300}>
+              <Button sx={{mx:1,color: 'rgb(240,227,227)', display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+              onClick={(e)=>{
+                e.stopPropagation();
+                navigate('/contact-us');
+              }}
+              >
+                Contact Us 
+              </Button>
+            </Link>
             {/* {pages.map((page) => (
             <Link to={`${page}`}
               activeClass="active"
@@ -189,7 +279,7 @@ function Navbar() {
           </Box>
           
           <Box>
-            <LanguageIcon onClick={handleOpenLanguage} sx={{color:'rgb(240,227,227)',fontSize:"35px",mx:user?4:3,cursor:"pointer",marginTop:"3px"}}/>
+            <LanguageIcon onClick={handleOpenLanguage} sx={{color:'rgb(240,227,227)',fontSize:"35px",mx:userdata?4:3,cursor:"pointer",marginTop:"3px"}}/>
           </Box>
           <Menu
               sx={{ mt: '45px' }}
@@ -216,11 +306,7 @@ function Navbar() {
             </Box>
           </Menu>
           
-          {user==false?
-          <Button sx={{color: 'rgb(240,227,227)',display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}>
-            Login
-          </Button>
-          :
+          {userdata && (userdata?.role==='user'|| userdata?.role==='admin')?
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -244,19 +330,24 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
             <Box sx={{border:"1.5px solid rgb(201,164,112)",margin:"3px 8px",overflow:"hidden"}}>
-              {settings.map((setting) => (
+              {settings.map((setting,index) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{}}>
-                  <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px",textAlign:"center",width:"100%"}}>{setting}</Typography>
+                  <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',borderBottom:"1.2px dotted rgb(201,164,112)",padding:"5px",textAlign:"center",width:"100%"}}
+                  onClick={()=>{userSubmit(setting)}}
+                  >{setting}</Typography>
                 </MenuItem>
               ))}
             </Box>
-              {/* {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" sx={{color:"#a04e4e",fontFamily: 'Helvetica'}}>{setting}</Typography>
-                </MenuItem>
-              ))} */}
             </Menu>
           </Box>
+          :
+          <Button sx={{color: 'rgb(240,227,227)',display: 'block',fontWeight:"500",fontFamily: 'Helvetica',fontSize:"18px" }}
+          onClick={()=>{
+            navigate("/user-login");
+          }}
+          >
+            Login
+          </Button>
           }
         </Toolbar>
       </Container>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { styled } from '@mui/material/styles';
@@ -20,9 +20,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Home() {
 
+  const [trigger,setTrigger] = useState(false);
+
   useEffect(() => {
     AOS.init({
-      offset:350,
+      offset:200,
       duration:1000,
     });
   }, [])
@@ -31,10 +33,13 @@ function Home() {
     <div> 
 
       {/* including Navbar  */}
-      <Navbar/>
-
+      {/* <Navbar 
+        setChapterTrigger={setTrigger}
+        chapterTrigger={trigger}
+      /> */}
+      
       <div className='background'>
-        <Box sx={{}}>
+        <Box id="Home" sx={{}}>
 
           {/* Explore Section */}
           <Grid container spacing={2}>

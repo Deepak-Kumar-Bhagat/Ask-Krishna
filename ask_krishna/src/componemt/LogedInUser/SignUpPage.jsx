@@ -9,7 +9,7 @@ function SignUpPage() {
   return (
     <div>
         {/* including Navbar  */}
-        <Navbar/>
+        {/* <Navbar/> */}
         <div className='background'> 
         {/* Sign Up Section */}
               <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 20px",background:"transparent"}}>

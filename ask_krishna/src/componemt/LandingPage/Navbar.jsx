@@ -116,6 +116,9 @@ function Navbar({chapterTrigger,setChapterTrigger}) {
     if(setting==="Logout"){
       userDelete();
     }
+    else if(setting==="Dashboard"){
+      navigate('/admin-dashboard');
+    }
   }
 
   return (

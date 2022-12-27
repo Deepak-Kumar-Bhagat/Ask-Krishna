@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import Footer from './Footer'
 import Navbar from './Navbar'
-import floral from '../../images/floral-decor.png';
+import floral from '../../images/floral-decor.png';   
 
 function About() {
   return (

@@ -13,7 +13,7 @@ function QuestionPage() {
   return (
     <div>
         <div className='background'> 
-        {/* About Us Section */}
+        {/* Ask Question Section */}
         <Box sx={{height:"100%",justifyContent:'center',display:"flex",flexDirection:"column",padding:"0px 20px",background:"transparent"}}>
             <Box sx={{padding:"3%",textAlign:"center"}}>
                <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.3rem"}}>Ask Question</Typography>
@@ -24,7 +24,7 @@ function QuestionPage() {
                 </Box>
                 
                 <Box sx={{marginTop:"30px"}}>
-                <TextField onChange={(e)=>{setinput(e.target.value)}} value={input} variant="standard" placeholder="Search by Phone" 
+                <TextField onChange={(e)=>{setinput(e.target.value)}} value={input} variant="standard" placeholder="Please Type Keyword" 
                     sx={{boxShadow:"0px 2px 6px rgba(19, 18, 66, 0.07)",borderRadius:"10px 0px 0px 10px",border:'1px solid #a04e4e',width:"30%",padding:"5px"}}
                     InputProps={{disableUnderline: true,startAdornment: <SearchRoundedIcon sx={{ color: "#a04e4e", margin: 1 }}/>}}/>
                 <Button variant="contained"

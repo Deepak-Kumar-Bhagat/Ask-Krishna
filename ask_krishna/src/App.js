@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import AddNewChapter from './componemt/AdminComponent/AddChapter/AddNewChapter';
+import Dashboard from './componemt/AdminComponent/Dashboard';
 import ChapterMainPage from './componemt/chaptersPage/ChapterMainPage';
 import ShlokaOverview from './componemt/chaptersPage/ShlokaOverview';
 import About from './componemt/LandingPage/About';
@@ -45,7 +47,9 @@ function App() {
         <Route exact path="/user-signup" element={<SignUpPage/>}/>
         <Route exact path="/user-forgetpassword" element={<ForgetPasswordPage/>}/>
         <Route exact path="/user-resetpassword" element={<ResetPasswordPage/>}/>
-
+        {/* ===========Admin User=========== */}
+        <Route exact path="/admin-dashboard" element={<Dashboard/>}/>
+        <Route exact path="/project-add" element={<AddNewChapter/>}/>
       </Routes>
       </BrowserRouter>
     </div>

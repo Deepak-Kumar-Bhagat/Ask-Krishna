@@ -1,15 +1,15 @@
 import { Box, Button, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React, { useState } from 'react'
-import MainSidebar from './MainSidebar'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Footer from '../LandingPage/Footer';
 import { useNavigate } from 'react-router-dom';
+import MainSidebar from '../MainSidebar';
+import Footer from '../../LandingPage/Footer';
 
-function Dashboard() {
+function SlokaList() {
   const navigate= useNavigate();
   const [temp,settemp]=useState([1,2,3,4,5,6]);
 
@@ -23,17 +23,17 @@ function Dashboard() {
                 <Stack sx={{width:"80%",height:"100vh",overflowY:"scroll"}}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{margin:"40px 30px"}}>
                         <Stack>
-                            <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"25px",color:"#a04e4e"}}>Chapter Directory</Typography>
+                            <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"25px",color:"#a04e4e"}}>Verse Directory</Typography>
                             <Typography sx={{fontFamily: 'Raleway',fontWeight: 500,letterSpacing: '.1rem',color: 'orange',textDecoration: 'none',fontSize:"14px"}}>
-                             List of Chapters in Bhagwat Geeta
+                             List of Verses of Chapter 2 in Bhagwat Geeta
                             </Typography>
                         </Stack>
                         <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}>
                             <Box sx={{ textTransform: "capitalize" }}
                             onClick={(e)=>{
-                              navigate('/project-add')
+                              navigate('/sloka-add')
                             }}
-                            >Add Chapter</Box>
+                            >Add Verse</Box>
                             <AddIcon fontSize="small" />
                         </Button>
                     </Stack>
@@ -43,10 +43,10 @@ function Dashboard() {
                         return(
                             <Stack direction="row" justifyContent="space-between" sx={{width:"400px",height:"150px",borderRadius:"10px",boxShadow:"5px 5px 10px rgb(201,164,112)",backgroundColor:"rgb(227,217,191,0.6)",cursor:"pointer",margin:"20px"}}>
                                 <Stack justifyContent="center" alignItems="" sx={{marginLeft:"25px"}}>
-                                    <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"22px",color:"rgb(72,67,56)",letterSpacing: '.2rem'}}>C H A P T E R 1</Typography>
-                                    <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontWeight:"550",fontSize:"18px",letterSpacing:"4px"}}>Karma Yoga</Typography>
+                                    <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"20px",color:"rgb(72,67,56)",letterSpacing: '.2rem'}}>V E R S E 1</Typography>
+                                    <Typography sx={{color:"rgb(72,67,56)",fontFamily:'Raleway',fontSize:"14px",marginRight:"1%"}}>krishna and see what krishna has told about your doubt/confusion in Bhagwat sk any doubtkrishna and see what krishna has told about...</Typography>
                                 </Stack>
-                                <Stack justifyContent="center" alignItems="center" spacing={1.5} sx={{backgroundColor:"#a04e4e",width:"20%",borderRadius:"0px 10px 10px 0px"}}>
+                                <Stack justifyContent="center" alignItems="center" spacing={1.5} sx={{backgroundColor:"#a04e4e",width:"170px",borderRadius:"0px 10px 10px 0px"}}>
                                     <RemoveRedEyeIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
                                     <EditIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
                                     onClick={()=>{
@@ -69,4 +69,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default SlokaList

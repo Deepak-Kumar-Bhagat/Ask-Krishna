@@ -18,7 +18,7 @@ function SlokaDashboard() {
         <div className='background'>
             <Stack direction="row" sx={{width:"100%",height:"auto",boxSizing:"border-box"}}>
                 <Stack sx={{width:"20%",height:"auto",boxSizing:"border-box",border:"1px solid red"}}>
-                    <MainSidebar/>
+                    <MainSidebar active={"Verse Directory"}/>
                 </Stack>
                 <Stack sx={{width:"80%",height:"100vh",overflowY:"scroll"}}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{margin:"40px 30px"}}>

@@ -9,6 +9,7 @@ import '../../css/universal.css';
 function QuestionPage() {
 
   const [input,setinput]=useState();
+  const [temp,setTemp]=useState(["Anger","Depression","Greed","Practicing Forgiveness","Confusion","Discriminated","Laziness","Pride","Dealing With Envy","Fear","Loneliness","Seeking Peace","Death of a Loved one","Feeling Sinful","Losing Hope","Temptation","Demotivated","Forgetfulness","Lust","Uncontrolled Mind"]);
 
   return (
     <div>
@@ -33,10 +34,14 @@ function QuestionPage() {
                 </Button>
                 </Box>
 
-                <Stack direction="row" spacing={6} sx={{marginTop:"70px",padding:"0% 5%"}}>
-                    <Stack justifyContent="center" alignItems="center" className="navbar" sx={{backgroundColor:"rgb(160,78,78)",width:"150px",height:"100px",borderRadius:"15px",cursor:"pointer","&:hover":{boxShadow:"5px 5px 10px rgb(201,164,112)"}}}>
-                        <Typography sx={{fontSize:"22px",color:'rgb(240,227,227)',fontFamily: 'Helvetica',fontWeight:"540",letterSpacing:"0.3rem"}}>Anger</Typography>
-                    </Stack>
+                <Stack direction="row" justifyContent="center" sx={{marginTop:"70px",padding:"0% 3%",display:"flex",flexWrap:"wrap",border:"1px solid red"}}>
+                    {temp.map((ele)=>{
+                        return(
+                           <Stack justifyContent="center" alignItems="center" className="navbar" sx={{backgroundColor:"rgb(160,78,78)",margin:"15px",width:"300px",height:"120px",borderRadius:"15px",cursor:"pointer","&:hover":{boxShadow:"5px 5px 10px rgb(201,164,112)"}}}>
+                                <Typography sx={{fontSize:"22px",color:'rgb(240,227,227)',fontFamily: 'Helvetica',fontWeight:"540",letterSpacing:"0.3rem"}}>{ele}</Typography>
+                            </Stack>
+                        )
+                    })}
                 </Stack>
             </Box>
         </Box>

@@ -18,7 +18,7 @@ function SlokaList() {
         <div className='background'>
             <Stack direction="row" sx={{width:"100%",height:"auto",boxSizing:"border-box"}}>
                 <Stack sx={{width:"20%",height:"auto",boxSizing:"border-box",border:"1px solid red"}}>
-                    <MainSidebar/>
+                    <MainSidebar active={"Verse Directory"}/>
                 </Stack>
                 <Stack sx={{width:"80%",height:"100vh",overflowY:"scroll"}}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{margin:"40px 30px"}}>
@@ -49,9 +49,9 @@ function SlokaList() {
                                 <Stack justifyContent="center" alignItems="center" spacing={1.5} sx={{backgroundColor:"#a04e4e",width:"170px",borderRadius:"0px 10px 10px 0px"}}>
                                     <RemoveRedEyeIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
                                     <EditIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
-                                    onClick={()=>{
-                                        navigate('/chapter-edit')
-                                    }}
+                                    // onClick={()=>{
+                                    //     navigate('/chapter-edit')
+                                    // }}
                                     />
                                     <DeleteIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
                                 </Stack>

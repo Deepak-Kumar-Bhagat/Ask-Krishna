@@ -41,7 +41,7 @@ function EditChapter() {
         <div className='background'>
             <Stack direction="row" sx={{width:"100%",minHeight:"100vh",boxSizing:"border-box"}}>
                 <Stack sx={{width:"20%",height:"auto",boxSizing:"border-box",border:"1px solid red"}}>
-                    <MainSidebar/>
+                    <MainSidebar active={"Chapter Directory"}/>
                 </Stack>
                 <Stack justifyContent="" alignItems="center" sx={{border:"1px solid red",width:"80%",height:"100vh",overflowY:"scroll"}}>
                     <Box sx={{padding:"3%",textAlign:"center"}}>

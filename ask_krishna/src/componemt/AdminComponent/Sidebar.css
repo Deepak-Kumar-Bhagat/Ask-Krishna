@@ -1,0 +1,58 @@
+.hover_button {
+    height: 45px;
+    border-radius: 4px;
+    padding: 0px 10px 0px 10px;
+    width: 100%;
+}
+.hover_button:hover {
+    background: rgb(160,78,78);
+    color: aliceblue;
+}
+.hover_button_icon{
+    color: rgb(160,78,78);
+}
+.hover_button_icon:hover{
+    color:aliceblue;
+}
+.hover_button_iconn{
+    fill: rgb(160,78,78);
+}
+.hover_button:hover .hover_button_iconn {
+    fill: aliceblue;
+}
+.hover_button:hover .hover_button_icon{
+    fill: aliceblue;
+}
+.hover_button:hover .link_name{
+    color: aliceblue;
+}
+
+.sidebar_option {
+    margin-bottom: 5px;
+    height: 45px;
+    border-radius: 4px;
+    padding: 0px 10px 0px 10px;
+    width: 92%;
+}
+.sidebar_option:hover {
+    background: rgb(190, 188, 188);
+    color: aliceblue;
+}
+.sidebar_option_icon{
+    color: #0F5DAE;
+}
+.sidebar_option_icon:hover{
+    color:aliceblue;
+}
+.sidebar_option_iconn{
+    fill: #0F5DAE;
+}
+.sidebar_option:hover .sidebar_option_iconn {
+    fill: aliceblue;
+}
+.sidebar_option:hover .sidebar_option_icon{
+    fill: aliceblue;
+}
+.sidebar_option:hover .link_name{
+    color: aliceblue;
+}

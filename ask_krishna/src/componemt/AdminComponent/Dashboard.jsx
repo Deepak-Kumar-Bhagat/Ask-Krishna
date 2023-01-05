@@ -17,6 +17,7 @@ function Dashboard() {
   const navigate= useNavigate();
   const [chapterList,setChapterList]=useState([]);
   const [trigger,setTrigger]=useState(false);
+  const [chapterToDelete,setChapterToDelete]=useState();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -34,8 +35,11 @@ function Dashboard() {
 
   const deleteChapter=async()=>{
     try{
-      console.log("Delete Chapter");
+      const url=Apiaddress + "/chapter/"+chapterToDelete;
+      const res = await axios.delete(url, {});
+       console.log(res?.data?.data);
       setTrigger(!trigger);
+      handleClose();
     }catch(err){
       console.log(err.message);
     }
@@ -105,7 +109,7 @@ function Dashboard() {
                                     }}
                                     />
                                     <DeleteIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
-                                      onClick={handleOpen}
+                                      onClick={()=>{handleOpen();setChapterToDelete(ele?.chapterNo)}}
                                     />
                                 </Stack>
                             </Stack>
@@ -136,7 +140,7 @@ function Dashboard() {
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={3}>
           <Box>
             <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1.5px solid green","&:hover": {backgroundColor: '#a04e4e',color:"white",border:"1.5px solid #a04e4e"}}}
-            onClick={()=>{deleteChapter()}}
+            onClick={deleteChapter}
             >Yes</Button>
           </Box>
           <Box>

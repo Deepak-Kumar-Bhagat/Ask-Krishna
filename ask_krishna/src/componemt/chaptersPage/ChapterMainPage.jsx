@@ -59,10 +59,6 @@ function ChapterMainPage({chapterTrigger}) {
 
   return (
         <div>
-          {/* <Navbar
-           setChapterTrigger={setTrigger}
-           chapterTrigger={trigger}
-          /> */}
           <div className='background'>
             <Box sx={{border:"1px solid red",textAlign:"center",padding:"3% 5%"}}>
                 <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"30px",color:"#a04e4e"}}>{`C H A P T E R  ${chapter?.chapterNo}`}</Typography>

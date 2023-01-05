@@ -2,6 +2,7 @@ import * as React from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import AddNewChapter from './componemt/AdminComponent/AddChapter/AddNewChapter';
 import EditChapter from './componemt/AdminComponent/AddChapter/EditChapter';
+import ViewChapter from './componemt/AdminComponent/AddChapter/ViewChapter';
 import AddNewSloka from './componemt/AdminComponent/AddSloka/AddNewSloka';
 import SlokaDashboard from './componemt/AdminComponent/AddSloka/SlokaDashboard';
 import SlokaList from './componemt/AdminComponent/AddSloka/SlokaList';
@@ -55,6 +56,7 @@ function App() {
         <Route exact path="/admin-dashboard" element={<Dashboard/>}/>
         <Route exact path="/project-add" element={<AddNewChapter/>}/>
         <Route exact path="/chapter-edit" element={<EditChapter/>}/>
+        <Route exact path="/chapter-view/:id" element={<ViewChapter/>}/>
         <Route exact path="/sloka" element={<SlokaDashboard/>}/>
         <Route exact path="/sloka-list" element={<SlokaList/>}/>
         <Route exact path="/sloka-add" element={<AddNewSloka/>}/>

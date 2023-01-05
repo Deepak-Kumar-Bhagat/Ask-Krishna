@@ -1,4 +1,4 @@
-import { Button, Stack, TextareaAutosize, TextField, Typography } from '@mui/material'
+import { Button, Modal, Stack, TextareaAutosize, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import MainSidebar from '../MainSidebar'
@@ -6,15 +6,27 @@ import floral from '../../../images/floral-decor.png';
 import RichTextEditor from 'react-rte';
 import Footer from '../../LandingPage/Footer';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { Apiaddress } from '../../../utility';
+import { useNavigate } from 'react-router-dom';
 
 function AddNewChapter() {
 
-    const {register,handleSubmit,formState: { errors }} = useForm();
+    const navigate=useNavigate();
+
+    const {register,handleSubmit,reset,formState: { errors }} = useForm();
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const [summary,setSummary]=useState("");
     const [summaryHindi,setSummaryHindi]=useState("");
     const [highlight,setHighlight]=useState("");
     const [highlightHindi,setHighlightHindi]=useState("");
+    const [tabIndex,setTabIndex]=useState();
+
+    const Tab=["The Chapter Is Created SuccessFull!!","This Chapter Is Already Exist!!"];
 
     const [editorValue, setEditorValue] = useState(RichTextEditor.createValueFromString(summary, 'html'));
     const [editorValue1, setEditorValue1] = useState(RichTextEditor.createValueFromString(summaryHindi, 'html'));
@@ -41,9 +53,37 @@ function AddNewChapter() {
      setHighlightHindi(value.toString("html"));
     };
     
-    const createChapter=()=>{
-        
+    const createChapter=async (data,e)=>{
+        e.preventDefault();
+        try{
+            let obj={chapterNo:+(data.chapterNo),chapterName:data.chapterName,chapterNameHindi:data.chapterNameHindi,chapterIntro:data.chapterIntro,chapterIntroHindi:data.chapterIntroHindi,chapterSummary:summary,chapterSummaryHindi:summaryHindi,chapterHighlight:highlight,chapterHighlightHindi:highlightHindi,verse:[]}
+            const url=Apiaddress + "/chapter/createchapter";
+            const res = await axios.post(url, obj);
+            console.log(res?.data?.data);
+            setTabIndex(0);
+            handleOpen();
+            // setInterval(function(){handleClose()},3000);
+        }
+        catch(err){
+            console.log(err);
+            setTabIndex(1);
+            handleOpen();
+        }
     }
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 350,
+        bgcolor: '#f6f0e4',
+        border: '2px solid #d4ad76',
+        borderRadius:"20px",
+        boxShadow: 24,
+        textAlign:"center",
+        p: 4,
+    };
 
   return (
     <div>
@@ -62,7 +102,7 @@ function AddNewChapter() {
                         </Box> 
                     </Box>
 
-                    <form onSubmit={handleSubmit((data) => console.log(data))} style={{width:"100%",display:"flex",justifyContent:"center"}}>
+                    <form onSubmit={handleSubmit(createChapter)} style={{width:"100%",display:"flex",justifyContent:"center"}}>
                     <Stack sx={{width:"70%",margin:"2% 0%"}}>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width:"100%",marginBottom:"20px"}}>
                             <Typography sx={{fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"20px",color:"rgb(72,67,56)",letterSpacing:"4px",marginBottom:"10px"}}>Chapter No.</Typography>
@@ -210,12 +250,40 @@ function AddNewChapter() {
                             
                     </Stack>
                     </form>
-
+    
                 </Stack>
             </Stack>
         </div>
         {/* Footer Section */}
         <Footer/>
+        
+        {/* Modal Section */}  
+        <Modal
+        open={open}
+        onClose={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"20px",fontWeight:"540",letterSpacing:"0.2rem"}}>
+            Hare Krishna
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2,mb:2,fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"18px",color:"rgb(72,67,56)",letterSpacing:"2px"}}>
+          {Tab[tabIndex]}
+          </Typography>
+          <Box>
+            {tabIndex==0?
+            <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1px solid #a04e4e","&:hover": {backgroundColor: '#a04e4e',color:"white"}}}
+            onClick={()=>{navigate(-1)}}
+            >OK</Button>
+            :
+            <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1px solid #a04e4e","&:hover": {backgroundColor: '#a04e4e',color:"white"}}}
+            onClick={handleClose}
+            >OK</Button>
+             }
+          </Box> 
+        </Box>
+      </Modal>
     </div>
   )
 }

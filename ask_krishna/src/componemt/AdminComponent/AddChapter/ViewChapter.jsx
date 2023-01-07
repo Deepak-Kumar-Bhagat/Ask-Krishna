@@ -37,7 +37,7 @@ function ViewChapter() {
                 <Stack sx={{width:"20%",height:"auto",boxSizing:"border-box",boxShadow:"5px 5px 5px rgb(201,164,112)"}}>
                     <MainSidebar active={"Chapter Directory"}/>
                 </Stack>
-                <Stack justifyContent="" alignItems="center" sx={{width:"80%",padding:"3% 5%"}}>
+                <Stack justifyContent="" alignItems="center" sx={{width:"80%",padding:"3% 0%"}}>
                   <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"30px",color:"#a04e4e"}}>{`C H A P T E R  ${chapter?.chapterNo}`}</Typography>
                     <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
                       <Typography sx={{color:"rgb(201,164,112)",marginRight:"10px"}}>==========</Typography>

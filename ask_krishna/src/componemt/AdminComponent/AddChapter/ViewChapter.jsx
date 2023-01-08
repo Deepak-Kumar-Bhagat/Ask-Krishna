@@ -1,6 +1,6 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../../LandingPage/Footer'
 import MainSidebar from '../MainSidebar';
 import axios from 'axios';
@@ -8,8 +8,11 @@ import { Apiaddress } from '../../../utility';
 import floral from '../../../images/floral-decor.png';
 import ChapterMainSummary from '../../chaptersPage/ChapterMainSummary';
 import ChapterMainHighlight from '../../chaptersPage/ChapterMainHighlight';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';  
 
 function ViewChapter() {
+
+   const navigate=useNavigate();
    
   const chapterId = useParams().id;
   const [curPage, setCurPage] = useState(1);
@@ -99,6 +102,18 @@ function ViewChapter() {
                       />
                     )}
                   </Box>
+
+                  <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"40px"}}>
+                            <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} 
+                                onClick={()=>{
+                                    navigate(-1);
+                                }}
+                            >
+                                <ArrowBackIcon/>
+                                <Box sx={{ textTransform: "capitalize",padding:"3px 25px 3px 3px",fontSize:"16px"}}>Back</Box>
+                            </Button>
+                        </Box>
+
                   </Box>
                 </Stack>
             </Stack>

@@ -4,6 +4,7 @@ import AddNewChapter from './componemt/AdminComponent/AddChapter/AddNewChapter';
 import EditChapter from './componemt/AdminComponent/AddChapter/EditChapter';
 import ViewChapter from './componemt/AdminComponent/AddChapter/ViewChapter';
 import AddNewSloka from './componemt/AdminComponent/AddSloka/AddNewSloka';
+import EditSloka from './componemt/AdminComponent/AddSloka/EditSloka';
 import SlokaDashboard from './componemt/AdminComponent/AddSloka/SlokaDashboard';
 import SlokaList from './componemt/AdminComponent/AddSloka/SlokaList';
 import Dashboard from './componemt/AdminComponent/Dashboard';
@@ -60,6 +61,7 @@ function App() {
         <Route exact path="/sloka" element={<SlokaDashboard/>}/>
         <Route exact path="/sloka-list" element={<SlokaList/>}/>
         <Route exact path="/sloka-add" element={<AddNewSloka/>}/>
+        <Route exact path="/sloka-edit" element={<EditSloka/>}/>
       </Routes>
       </BrowserRouter>
     </div>

@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Apiaddress } from '../../../utility';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';  
 
 
 function EditChapter() {
@@ -75,10 +76,14 @@ function EditChapter() {
             const url=Apiaddress + "/chapter/"+id;
             const res = await axios.get(url, {});
             reset({ chapterNo:res?.data?.data[0].chapterNo,chapterName:res?.data?.data[0].chapterName,chapterNameHindi:res?.data?.data[0].chapterNameHindi,chapterIntro:res?.data?.data[0].chapterIntro,chapterIntroHindi:res?.data?.data[0].chapterIntroHindi})
-            setSummary(res?.data?.data[0].summary);
-            setSummaryHindi(res?.data?.data[0].summaryHindi);
-            setHighlight(res?.data?.data[0].setHighlight);
-            setHighlightHindi(res?.data?.data[0].setHighlightHindi);
+            setSummary(res?.data?.data[0].chapterSummary);
+            setSummaryHindi(res?.data?.data[0].chapterSummaryHindi);
+            setHighlight(res?.data?.data[0].chapterHighlight);
+            setHighlightHindi(res?.data?.data[0].chapterHighlightHindi);
+            setEditorValue(RichTextEditor.createValueFromString(res?.data?.data[0]?.chapterSummary, 'html'));
+            setEditorValue1(RichTextEditor.createValueFromString(res?.data?.data[0]?.chapterSummaryHindi, 'html'));
+            setEditorValue2(RichTextEditor.createValueFromString(res?.data?.data[0]?.chapterHighlight, 'html'));
+            setEditorValue3(RichTextEditor.createValueFromString(res?.data?.data[0]?.chapterHighlightHindi, 'html'));
         }catch(err){
             console.log(err);
         }
@@ -247,11 +252,25 @@ function EditChapter() {
                                 style={{ minHeight:400}}
                                 />
                             </Stack>
+
+                         <Stack direction="row" justifyContent="space-between" alignItems="center">
+                        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                            <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} 
+                                onClick={()=>{
+                                    navigate(-1);
+                                }}
+                            >
+                                <ArrowBackIcon/>
+                                <Box sx={{ textTransform: "capitalize",padding:"3px 25px 3px 3px",fontSize:"16px"}}>Back</Box>
+                            </Button>
+                        </Box>
+                           
                         <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                             <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} type="submit">
                                 <Box sx={{ textTransform: "capitalize",padding:"3px 25px",fontSize:"16px"}}>Save</Box>
                             </Button>
                         </Box>
+                        </Stack>
                             
                     </Stack>
                     </form>

@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Apiaddress } from '../../../utility';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function AddNewChapter() {
 
@@ -242,11 +243,25 @@ function AddNewChapter() {
                                 style={{ minHeight:400}}
                                 />
                             </Stack>
+
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                            <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} 
+                                onClick={()=>{
+                                    navigate(-1);
+                                }}
+                            >
+                                <ArrowBackIcon/>
+                                <Box sx={{ textTransform: "capitalize",padding:"3px 25px 3px 3px",fontSize:"16px"}}>Back</Box>
+                            </Button>
+                        </Box>
+                           
                         <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                             <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} type="submit">
                                 <Box sx={{ textTransform: "capitalize",padding:"3px 25px",fontSize:"16px"}}>Save</Box>
                             </Button>
                         </Box>
+                        </Stack>
                             
                     </Stack>
                     </form>
@@ -263,7 +278,7 @@ function AddNewChapter() {
         onClose={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      >
+        >
         <Box sx={style}>
           <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"20px",fontWeight:"540",letterSpacing:"0.2rem"}}>
             Hare Krishna

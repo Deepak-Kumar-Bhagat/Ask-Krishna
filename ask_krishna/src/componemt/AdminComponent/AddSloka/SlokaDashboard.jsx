@@ -10,6 +10,9 @@ import MainSidebar from '../MainSidebar';
 import Footer from '../../LandingPage/Footer';
 import axios from 'axios';
 import { Apiaddress } from '../../../utility';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 
 function SlokaDashboard() {
   const navigate= useNavigate();
@@ -30,6 +33,43 @@ function SlokaDashboard() {
         fetchChapterList();
     },[])
 
+  const [curpage, setcurpage] = useState(1);
+  const [pageRange, setPageRange] = useState([0, 5]);
+
+  const nextClick = () => {
+    if (
+      !(chapterList.length >= pageRange[0] && chapterList.length <= pageRange[1])
+    ) {
+      setcurpage(curpage + 1);
+      setPageRange([pageRange[0] + 5, pageRange[1] + 5]);
+    }
+  };
+
+  const prvClick = () => {
+    if (pageRange[0] != 0 && pageRange[1] != 5) {
+      setcurpage(curpage - 1);
+      setPageRange([pageRange[0] - 5, pageRange[1] - 5]);
+    }
+  };
+
+  const [pages, setPages] = useState([]);
+  useEffect(() => {
+    if (chapterList) {
+      let arr = [];
+      for (
+        let i = 1;
+        i <=
+        (chapterList.length % 5 == 0
+          ? chapterList.length / 5
+          : chapterList.length / 5 + 1);
+        i++
+      ) {
+        arr.push(i);
+      }
+      setPages(arr);  
+    }
+  }, [chapterList]);  
+
 
   return (
     <div>
@@ -48,12 +88,13 @@ function SlokaDashboard() {
                         </Stack>
                     </Stack>
                     
-                    <Stack direction="row" justifyContent="center" sx={{dispaly:"flex",flexWrap:"wrap",MaxHeight:"100vh",padding:"3% 0%"}}>
-                    {chapterList?.map((ele)=>{
+                    <Stack direction="row" justifyContent="center" sx={{dispaly:"flex",flexWrap:"wrap",MaxHeight:"100vh",padding:"3% 0%"}}>  
+                    {chapterList?.map((ele,index)=>{
+                        if (index >= pageRange[0] && index <= pageRange[1]) {
                         return(
                             <Stack direction="row" justifyContent="space-between" sx={{width:"400px",height:"150px",borderRadius:"10px",boxShadow:"5px 5px 10px rgb(201,164,112)",backgroundColor:"rgb(227,217,191,0.6)",cursor:"pointer",margin:"20px"}}
                                 onClick={()=>{
-                                    navigate('/sloka-list',{state:{verse:ele?.verse}})
+                                    navigate('/sloka-list',{state:{chapterNo:ele?.chapterNo,chapterName:ele?.chapterName,chapterNameHindi:ele?.chapterNameHindi}})
                                 }}>
                                 <Stack justifyContent="center" alignItems="" sx={{marginLeft:"25px"}}>
                                     <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"22px",color:"rgb(72,67,56)",letterSpacing: '.2rem'}}>{`C H A P T E R ${ele?.chapterNo}`}</Typography>
@@ -64,8 +105,33 @@ function SlokaDashboard() {
                                 </Stack>
                             </Stack>
                         )
+                        }
                     })}
                     </Stack>
+
+                    <Box sx={{ display: "flex", justifyContent: "center",marginBottom:"30px"}}>
+                        {chapterList.length!=0 && 
+                            <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}
+                                onClick={prvClick}>
+                                <ArrowBackIosIcon fontSize="small" />
+                                <Box sx={{ textTransform: "capitalize" }}>Previous</Box>
+                            </Button>}
+
+            <Box sx={{background: "#E3E4EB",display: "flex",placeItems: "center",margin: " 0 10px",borderRadius: "5px"}}>
+                <Box sx={{background: `white`,color: "black",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{curpage}</Box>
+                <Box sx={{color: "gray",width: "30px",borderRadius: "5px",margin: "0 0px",display: "grid",placeItems: "center"}}>of</Box>
+                <Box sx={{background: `#E3E4EB`,color: "gray",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{pages?.length}</Box>
+            </Box>
+
+            {chapterList.length!=0 && 
+                <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)",padding:"0px 20px 0px 35px"}}
+                    onClick={nextClick}>
+                    <Box sx={{ textTransform: "capitalize" }}>Next</Box>
+                    <ArrowForwardIosIcon fontSize="small" />
+                </Button>
+            }
+          </Box>
+
 
                 </Stack>
             </Stack>

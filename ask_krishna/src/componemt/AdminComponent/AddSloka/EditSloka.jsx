@@ -1,6 +1,6 @@
 import { Box, Button, Typography, TextareaAutosize, TextField, Modal, } from '@mui/material'
 import { Stack } from '@mui/system'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,15 +15,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Apiaddress } from '../../../utility';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';  
 
-
-function AddNewSloka() {
-
+function EditSloka(){
+    
     const navigate=useNavigate();
 
     const {state}=useLocation();
-    const {chapterNo,chapterName,chapterNameHindi}=state;  
+    const {chapterNo,chapterName,chapterNameHindi,verseNo,id}=state;  
 
     const {register,handleSubmit,reset,formState: { errors }} = useForm();
 
@@ -33,9 +32,6 @@ function AddNewSloka() {
     const [editorValue, setEditorValue] = useState(RichTextEditor.createValueFromString(purportHindi, 'html'));
     const [editorValue1, setEditorValue1] = useState(RichTextEditor.createValueFromString(purport, 'html'));
     const [searchKey,setSearchKey]= useState([]);
-    const [tabIndex,setTabIndex]=useState();
-
-    const Tab=["The Shloka Is Created SuccessFull!!","This Shloka Is Already Exist!!"];
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -51,22 +47,40 @@ function AddNewSloka() {
      setPurport(value.toString("html"));
     };
 
-    const createSloka=async (data,e)=>{
+    const updateSloka=async (data,e)=>{
         e.preventDefault();
         try{
-            let obj={chapterNo:+(chapterNo),chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:+(data.verseNo),slokSanskrit:data.slokSanskrit,slokEnglish:data.slokEnglish,wordMeaning:data.wordMeaning,wordMeaningHindi:data.wordMeaningHindi,translation:data.translation,translationHindi:data.translationHindi,purport:purport,purportHindi:purportHindi,searchKey:searchKey,videoLink:data.videoLink}
-            const url=Apiaddress + "/sloka/addsloka";
-            const res = await axios.post(url, obj);
+            let obj={chapterNo:+(chapterNo),chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:+(verseNo),slokSanskrit:data.slokSanskrit,slokEnglish:data.slokEnglish,wordMeaning:data.wordMeaning,wordMeaningHindi:data.wordMeaningHindi,translation:data.translation,translationHindi:data.translationHindi,purport:purport,purportHindi:purportHindi,searchKey:searchKey,videoLink:data.videoLink}
+            const url=Apiaddress + "/sloka/updatesloka/"+id;
+            const res = await axios.patch(url, obj);
             console.log(res?.data?.data);
-            setTabIndex(0);
             handleOpen();
         }
         catch(err){
             console.log(err);
-            setTabIndex(1);
-            handleOpen();
         }
     }
+
+    const fetchShlokaDetails=async()=>{
+        try{
+            const url=Apiaddress + "/sloka/"+id;
+            const res = await axios.get(url, {});
+            reset({ chapterNo:res?.data?.data[0].chapterNo,chapterName:res?.data?.data[0].chapterName,chapterNameHindi:res?.data?.data[0].chapterNameHindi,verseNo:res?.data?.data[0].verseNo,slokSanskrit:res?.data.data[0].slokSanskrit,slokEnglish:res?.data.data[0].slokEnglish,wordMeaning:res?.data?.data[0].wordMeaning,wordMeaningHindi:res?.data?.data[0].wordMeaningHindi,translation:res?.data?.data[0].translation,translationHindi:res?.data?.data[0].translationHindi,videoLink:res?.data?.data[0].videoLink})
+            setPurport(res?.data?.data[0]?.purport);
+            setPurportHindi(res?.data?.data[0]?.purportHindi);
+            setEditorValue(RichTextEditor.createValueFromString(res?.data?.data[0]?.purportHindi, 'html'));
+            setEditorValue1(RichTextEditor.createValueFromString(res?.data?.data[0]?.purport, 'html'));
+            setSearchKey(res?.data?.data[0]?.searchKey);
+        }catch(err){
+            console.log(err);
+        }
+    }
+    
+    useEffect(()=>{
+     if(id){
+        fetchShlokaDetails();
+     }
+    },[]);
 
     const style = {
         position: 'absolute',
@@ -91,7 +105,7 @@ function AddNewSloka() {
                 </Stack>
                 <Stack justifyContent="" alignItems="center" sx={{width:"80%",height:"100vh",overflowY:"scroll"}}>
                     <Box sx={{padding:"3%",textAlign:"center"}}>
-                        <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.3rem"}}>Add Verse</Typography>
+                        <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"35px",fontWeight:"540",letterSpacing:"0.3rem"}}>Edit Verse</Typography>
                         <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",background:"transparent"}}>
                             <Typography sx={{color:"rgb(201,164,112)",marginRight:"10px"}}>==========</Typography>
                             <img src={floral} style={{width:"20%",paddingTop:"0px"}}></img>
@@ -99,7 +113,7 @@ function AddNewSloka() {
                         </Box> 
                     </Box>
 
-                    <form onSubmit={handleSubmit(createSloka)} style={{width:"100%",display:"flex",justifyContent:"center"}}>
+                    <form onSubmit={handleSubmit(updateSloka)} style={{width:"100%",display:"flex",justifyContent:"center"}}>
                     <Stack sx={{width:"70%",margin:"2% 0%"}}>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width:"100%",marginBottom:"20px"}}>
                             <Typography sx={{fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"20px",color:"rgb(72,67,56)",letterSpacing:"4px",marginBottom:"10px"}}>Chapter No.</Typography>
@@ -115,20 +129,7 @@ function AddNewSloka() {
                         </Stack>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width:"100%",marginBottom:"40px"}}>
                             <Typography sx={{fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"20px",color:"rgb(72,67,56)",letterSpacing:"4px",marginBottom:"10px"}}>Verse No.</Typography>
-                            <TextField 
-                                variant="standard" 
-                                color="error" 
-                                focused 
-                                type="number" 
-                                sx={{Color:'#ff8c00',width:"60%"}}
-                                name="verseNo"
-                                {...register("verseNo", {
-                                required:"Verse No. is required.",
-                                min:{value:1,message:'Verse No should be greater than or equal to 1'}
-                                })}
-                                error={Boolean(errors.verseNo)}
-                                helperText={errors.verseNo?.message}
-                            />
+                            <Typography sx={{Color:'#ff8c00',width:"60%"}}>{verseNo}</Typography>
                         </Stack>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{width:"100%",marginBottom:"60px"}}>
                             <Typography sx={{fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"20px",color:"rgb(72,67,56)",letterSpacing:"4px",marginBottom:"10px"}}>Video Link</Typography>
@@ -302,7 +303,7 @@ function AddNewSloka() {
                                 style={{ minHeight:400}}
                                 />
                             </Stack>
-                        
+                           
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
                         <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                             <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}} 
@@ -342,18 +343,12 @@ function AddNewSloka() {
             Hare Krishna
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2,mb:2,fontFamily:'Raleway',lineHeight:"20px",fontWeight:"500",fontSize:"18px",color:"rgb(72,67,56)",letterSpacing:"2px"}}>
-          {Tab[tabIndex]}
+          Shloka Is Updated Successfully!!
           </Typography>
           <Box>
-            {tabIndex==0?
             <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1px solid #a04e4e","&:hover": {backgroundColor: '#a04e4e',color:"white"}}}
             onClick={()=>{navigate(-1)}}
             >OK</Button>
-            :
-            <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1px solid #a04e4e","&:hover": {backgroundColor: '#a04e4e',color:"white"}}}
-            onClick={handleClose}
-            >OK</Button>
-             }
           </Box> 
         </Box>
       </Modal>
@@ -361,4 +356,4 @@ function AddNewSloka() {
   )
 }
 
-export default AddNewSloka
+export default EditSloka

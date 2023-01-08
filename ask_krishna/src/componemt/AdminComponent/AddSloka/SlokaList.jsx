@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Modal, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
@@ -16,12 +16,35 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 function SlokaList() {
   const navigate= useNavigate();
   const {state}=useLocation();
-  const {verse}=state;
+  const {chapterNo,chapterName,chapterNameHindi}=state;
 
   const [sloka,setSlokaList]=useState([]);
+  const [trigger,setTrigger]=useState(false);
+  const [chapterToDelete,setChapterToDelete]=useState();
+  const [slokaToDelete,setSlokaToDelete]=useState();
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const deleteSloka=async()=>{
+    try{
+      let obj={chapterNo:chapterToDelete}
+      const url=Apiaddress + "/sloka/"+slokaToDelete;
+      const res = await axios.post(url,obj);
+       console.log(res?.data?.data);
+      setTrigger(!trigger);
+      handleClose();
+    }catch(err){
+      console.log(err.message);
+    }
+  }
 
    const getChapterSlokaList=async ()=>{
     try{
+      const url= Apiaddress + "/chapter/"+chapterNo
+      const res = await axios.get(url, {});
+      let verse=res?.data?.data[0].verse;
       let temp=[];
       for(let i=0;i<verse.length;i++){
         const url=Apiaddress + "/sloka/"+verse[i];
@@ -37,24 +60,24 @@ function SlokaList() {
 
   useEffect(()=>{
     getChapterSlokaList();
-  },[])
+  },[trigger])
 
   const [curpage, setcurpage] = useState(1);
-  const [pageRange, setPageRange] = useState([0, 6]);
+  const [pageRange, setPageRange] = useState([0, 5]);
 
   const nextClick = () => {
     if (
       !(sloka.length >= pageRange[0] && sloka.length <= pageRange[1])
     ) {
       setcurpage(curpage + 1);
-      setPageRange([pageRange[0] + 6, pageRange[1] + 6]);
+      setPageRange([pageRange[0] + 5, pageRange[1] + 5]);
     }
   };
 
   const prvClick = () => {
-    if (pageRange[0] != 0 && pageRange[1] != 6) {
+    if (pageRange[0] != 0 && pageRange[1] != 5) {
       setcurpage(curpage - 1);
-      setPageRange([pageRange[0] - 6, pageRange[1] - 6]);
+      setPageRange([pageRange[0] - 5, pageRange[1] - 5]);
     }
   };
 
@@ -65,9 +88,9 @@ function SlokaList() {
       for (
         let i = 1;
         i <=
-        (sloka.length % 6 == 0
-          ? sloka.length / 6
-          : sloka.length / 6 + 1);
+        (sloka.length % 5 == 0
+          ? sloka.length / 5
+          : sloka.length / 5 + 1);
         i++
       ) {
         arr.push(i);
@@ -75,6 +98,20 @@ function SlokaList() {
       setPages(arr);
     }
   }, [sloka]);
+  
+   const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 350,
+        bgcolor: '#f6f0e4',
+        border: '2px solid #d4ad76',
+        borderRadius:"20px",
+        boxShadow: 24,
+        textAlign:"center",
+        p: 4,
+    };
 
   return (
     <div>
@@ -88,13 +125,13 @@ function SlokaList() {
                         <Stack>
                             <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"25px",color:"#a04e4e"}}>Verse Directory</Typography>
                             <Typography sx={{fontFamily: 'Raleway',fontWeight: 500,letterSpacing: '.1rem',color: 'orange',textDecoration: 'none',fontSize:"14px"}}>
-                             List of Verses of Chapter 2 in Bhagwat Geeta
+                            {`List of Verses of Chapter ${chapterNo} in Bhagwat Geeta`}
                             </Typography>
                         </Stack>
                         <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}>
                             <Box sx={{ textTransform: "capitalize" }}
                             onClick={(e)=>{
-                              navigate('/sloka-add')
+                              navigate('/sloka-add',{state:{chapterNo:chapterNo,chapterName:chapterName,chapterNameHindi:chapterNameHindi}})
                             }}
                             >Add Verse</Box>
                             <AddIcon fontSize="small" />
@@ -113,11 +150,13 @@ function SlokaList() {
                                 <Stack justifyContent="center" alignItems="center" spacing={1.5} sx={{backgroundColor:"#a04e4e",width:"170px",borderRadius:"0px 10px 10px 0px"}}>
                                     <RemoveRedEyeIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
                                     <EditIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
-                                    // onClick={()=>{
-                                    //     navigate('/chapter-edit')
-                                    // }}
+                                    onClick={()=>{
+                                        navigate('/sloka-edit',{state:{chapterNo:chapterNo,chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:ele.verseNo,id:ele._id}})
+                                    }}
                                     />
-                                    <DeleteIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
+                                    <DeleteIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
+                                      onClick={()=>{handleOpen();setChapterToDelete(ele?.chapterNo);setSlokaToDelete(ele?._id)}}
+                                    />
                                 </Stack>
                             </Stack>
                         )}
@@ -152,6 +191,37 @@ function SlokaList() {
             {/* Footer Section */}
             <Footer/>
         </div>
+
+         {/* Modal Section */}  
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography sx={{color:"#a04e4e",fontFamily: 'Helvetica',fontSize:"20px",fontWeight:"540",letterSpacing:"0.2rem"}}>
+            Hare Krishna
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2,mb:2,fontFamily:'Raleway',lineHeight:"30px",fontWeight:"500",fontSize:"18px",color:"rgb(72,67,56)",letterSpacing:"2px"}}>
+          Are You Really Want To Delete This Sloka?
+          </Typography>
+
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={3}>
+          <Box>
+            <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1.5px solid green","&:hover": {backgroundColor: '#a04e4e',color:"white",border:"1.5px solid #a04e4e"}}}
+            onClick={deleteSloka}
+            >Yes</Button>
+          </Box>
+          <Box>
+            <Button variant="contained" size="medium"  sx={{letterSpacing:"0.2rem",boxShadow:"none",borderRadius:"0px",padding:"7px 20px 7px 25px",marginTop:"10px",color:"#a04e4e",background: 'none',border:"1.5px solid red","&:hover": {backgroundColor: '#a04e4e',color:"white",border:"1.5px solid #a04e4e"}}}
+            onClick={()=>{handleClose()}}
+            >No</Button>
+          </Box>
+          </Stack>
+
+        </Box>
+      </Modal>
     </div>
   )
 }

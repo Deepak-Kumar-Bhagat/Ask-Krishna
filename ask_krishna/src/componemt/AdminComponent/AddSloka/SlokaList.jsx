@@ -148,7 +148,11 @@ function SlokaList() {
                                     <Typography sx={{color:"rgb(72,67,56)",fontFamily:'Raleway',fontSize:"14px",marginRight:"1%"}}>{ele?.translation.substring(0, 100)+"..."}</Typography>
                                 </Stack>
                                 <Stack justifyContent="center" alignItems="center" spacing={1.5} sx={{backgroundColor:"#a04e4e",width:"170px",borderRadius:"0px 10px 10px 0px"}}>
-                                    <RemoveRedEyeIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}/>
+                                    <RemoveRedEyeIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
+                                    onClick={()=>{
+                                      navigate('/sloka-view',{state:{chapterNo:chapterNo,chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:ele.verseNo,id:ele._id}});
+                                    }}
+                                    />
                                     <EditIcon sx={{color:"lightgray",cursor:"pointer","&:hover":{color:"white"}}}
                                     onClick={()=>{
                                         navigate('/sloka-edit',{state:{chapterNo:chapterNo,chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:ele.verseNo,id:ele._id}})

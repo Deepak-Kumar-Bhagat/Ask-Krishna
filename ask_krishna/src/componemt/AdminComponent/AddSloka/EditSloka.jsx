@@ -51,6 +51,7 @@ function EditSloka(){
         e.preventDefault();
         try{
             let obj={chapterNo:+(chapterNo),chapterName:chapterName,chapterNameHindi:chapterNameHindi,verseNo:+(verseNo),slokSanskrit:data.slokSanskrit,slokEnglish:data.slokEnglish,wordMeaning:data.wordMeaning,wordMeaningHindi:data.wordMeaningHindi,translation:data.translation,translationHindi:data.translationHindi,purport:purport,purportHindi:purportHindi,searchKey:searchKey,videoLink:data.videoLink}
+            console.log(obj);
             const url=Apiaddress + "/sloka/updatesloka/"+id;
             const res = await axios.patch(url, obj);
             console.log(res?.data?.data);

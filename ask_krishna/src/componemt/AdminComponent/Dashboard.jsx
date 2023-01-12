@@ -124,7 +124,7 @@ function Dashboard() {
                               navigate('/project-add')
                             }}
                             >Add Chapter</Box>
-                            <AddIcon fontSize="small" />
+                            <AddIcon fontSize="small" />  
                         </Button>
                     </Stack>
                     
@@ -156,30 +156,33 @@ function Dashboard() {
                         )
                       }
                     })}
+
                     </Stack>
 
-                  <Box sx={{ display: "flex", justifyContent: "center",marginBottom:"30px"}}>
+                  {chapterList.length!=0 &&  
+                      <Box sx={{ display: "flex", justifyContent: "center",marginBottom:"30px"}}>
                         {chapterList.length!=0 && 
-                            <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}
-                                onClick={prvClick}>
-                                <ArrowBackIosIcon fontSize="small" />
-                                <Box sx={{ textTransform: "capitalize" }}>Previous</Box>
-                            </Button>}
+                          <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}
+                            onClick={prvClick}>
+                            <ArrowBackIosIcon fontSize="small" />
+                            <Box sx={{ textTransform: "capitalize" }}>Previous</Box>
+                          </Button>}
 
-            <Box sx={{background: "#E3E4EB",display: "flex",placeItems: "center",margin: " 0 10px",borderRadius: "5px"}}>
-                <Box sx={{background: `white`,color: "black",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{curpage}</Box>
-                <Box sx={{color: "gray",width: "30px",borderRadius: "5px",margin: "0 0px",display: "grid",placeItems: "center"}}>of</Box>
-                <Box sx={{background: `#E3E4EB`,color: "gray",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{pages?.length}</Box>
-            </Box>
+                        <Box sx={{background: "#E3E4EB",display: "flex",placeItems: "center",margin: " 0 10px",borderRadius: "5px"}}>
+                          <Box sx={{background: `white`,color: "black",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{curpage}</Box>
+                          <Box sx={{color: "gray",width: "30px",borderRadius: "5px",margin: "0 0px",display: "grid",placeItems: "center"}}>of</Box>
+                          <Box sx={{background: `#E3E4EB`,color: "gray",width: "30px",borderRadius: "5px",margin: "0 10px",display: "grid",placeItems: "center"}}>{pages?.length}</Box>
+                        </Box>
 
-            {chapterList.length!=0 && 
-                <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)",padding:"0px 20px 0px 35px"}}
-                    onClick={nextClick}>
-                    <Box sx={{ textTransform: "capitalize" }}>Next</Box>
-                    <ArrowForwardIosIcon fontSize="small" />
-                </Button>
-            }
-          </Box>
+                        {chapterList.length!=0 && 
+                          <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)",padding:"0px 20px 0px 35px"}}
+                            onClick={nextClick}>
+                            <Box sx={{ textTransform: "capitalize" }}>Next</Box>
+                            <ArrowForwardIosIcon fontSize="small" />
+                          </Button>
+                        }
+                      </Box>
+                    } 
 
                 </Stack>
             </Stack>

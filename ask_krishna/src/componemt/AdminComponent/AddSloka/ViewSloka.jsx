@@ -12,6 +12,7 @@ import MainSidebar from '../MainSidebar';
 import axios from 'axios';
 import { Apiaddress } from '../../../utility';
 import { useLocation } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 function ViewSloka() {
 
@@ -108,10 +109,10 @@ function ViewSloka() {
                 <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"25px",letterSpacing:"4px",marginBottom:"20px"}}>{`VERSE ${verse?.verseNo}`}</Typography>
 
                 <Box sx={{margin:"40px 0px",height:"350px"}}>
-                  <YouTube videoId="vBJ5HSs-N9o" opts={opts} onReady={onPlayerReady} />
+                  <YouTube videoId={verse?.videoLink} opts={opts} onReady={onPlayerReady} />
                 </Box>
 
-                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",margin:"20px 0px"}}>श्रीभगवानुवाच |इमं विवस्वते योगं प्रोक्तवानहमव्ययम् |विवस्वान्मनवे प्राह मनुरिक्ष्वाकवेऽब्रवीत् ॥1॥</Typography>
+                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",margin:"20px 0px"}}>{verse?.slokSanskrit}</Typography>
                 
                 <Stack sx={{justifyContent:"center",alignItems:"center",marginBottom:"20px"}}>
                     <Box sx={{backgroundColor:"#a04e4e",justifyContent:"center",alignItems:"center",display:"flex",border:"1.5px solid lightgray",cursor:"pointer",borderRadius:"50%",padding:"1%","&:hover":{boxShadow:"0px 0px 5px #a04e4e",border:"none"}}}>
@@ -120,14 +121,18 @@ function ViewSloka() {
                 </Stack>
 
                 <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px",textDecoration:'underline'}}>Transliteration</Typography>
-                <Typography sx={{color:"#666666",fontFamily: 'Noto Serif',fontSize:"23px",marginBottom:"40px",fontStyle:"italic"}}>śhrī bhagavān uvāchaimaṁ vivasvate yogaṁ proktavān aham avyayamvivasvān manave prāha manur ikṣhvākave ’bravīt</Typography>
+                <Typography sx={{color:"#666666",fontFamily: 'Noto Serif',fontSize:"23px",marginBottom:"40px",fontStyle:"italic"}}>{verse?.slokEnglish}</Typography>
 
                 <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px",textDecoration:'underline'}}>Word Meanings</Typography>
-                <Typography sx={{color:"#666666",fontFamily:'Noto Serif',fontSize:"23px",marginBottom:"40px",fontStyle:"italic"}}>śhrī-bhagavān uvācha—the Supreme Lord Shree Krishna said; imam—this; vivasvate—to the Sun-god; yogam—the science of Yog; proktavān—taught; aham—I; avyayam—eternal; vivasvān—Sun-god; manave—to Manu, the original progenitor of humankind; prāha—told; manuḥ—Manu; ikṣhvākave—to Ikshvaku, first king of the Solar dynasty; abravīt—instructed</Typography>
+                <Typography sx={{color:"#666666",fontFamily:'Noto Serif',fontSize:"23px",marginBottom:"40px",fontStyle:"italic"}}>{verse?.wordMeaning}</Typography>
 
-                 <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px",textDecoration:'underline'}}>Translation</Typography>
-                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",marginBottom:"40px"}}>The Blessed Lord said: I imparted this imperishable Yoga to Vivasvan(Sun-God), Vivasvan taught this to Manu, and Manu transmitted this to Iksavaku.</Typography>
+                <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px",textDecoration:'underline'}}>Translation</Typography>
+                <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",marginBottom:"40px"}}>{verse?.translation}</Typography>
 
+                <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontSize:"23px",margin:"10px",letterSpacing:"4px",textDecoration:'underline'}}>Purport</Typography>
+                {
+                    verse?.purport && <Typography sx={{color:"#666666",fontFamily: 'Raleway',fontSize:"23px",marginBottom:"40px"}}>{parse(verse?.purport)}</Typography> 
+                }
                 <Stack direction="row" justifyContent="space-between">
                     <Box sx={{backgroundColor:"#a04e4e",justifyContent:"center",alignItems:"center",display:"flex",border:"1.5px solid lightgray",cursor:"pointer",borderRadius:"50%",padding:"1%","&:hover":{boxShadow:"0px 0px 5px #a04e4e",border:"none"}}}
                     onClick={prvClick}

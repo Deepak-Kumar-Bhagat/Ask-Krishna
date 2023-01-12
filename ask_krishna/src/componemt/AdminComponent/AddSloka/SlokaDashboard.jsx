@@ -96,7 +96,7 @@ function SlokaDashboard() {
                                 onClick={()=>{
                                     navigate('/sloka-list',{state:{chapterNo:ele?.chapterNo,chapterName:ele?.chapterName,chapterNameHindi:ele?.chapterNameHindi}})
                                 }}>
-                                <Stack justifyContent="center" alignItems="" sx={{marginLeft:"25px"}}>
+                                <Stack justifyContent="center" alignItems="" sx={{marginLeft:"25px",width:"80%"}}>
                                     <Typography sx={{fontFamily:"Helvetica",fontWeight:"550",fontSize:"22px",color:"rgb(72,67,56)",letterSpacing: '.2rem'}}>{`C H A P T E R ${ele?.chapterNo}`}</Typography>
                                     <Typography sx={{color:"rgb(72,67,56)",fontFamily: 'Raleway',fontWeight:"550",fontSize:"18px",letterSpacing:"4px"}}>{ele?.chapterName}</Typography>
                                 </Stack>
@@ -108,7 +108,8 @@ function SlokaDashboard() {
                         }
                     })}
                     </Stack>
-
+                   
+                    {chapterList.length!==0 && 
                     <Box sx={{ display: "flex", justifyContent: "center",marginBottom:"30px"}}>
                         {chapterList.length!=0 && 
                             <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}
@@ -130,7 +131,7 @@ function SlokaDashboard() {
                     <ArrowForwardIosIcon fontSize="small" />
                 </Button>
             }
-          </Box>
+          </Box>}
 
 
                 </Stack>

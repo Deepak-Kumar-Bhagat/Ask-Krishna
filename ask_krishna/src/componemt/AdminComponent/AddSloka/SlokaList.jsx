@@ -167,6 +167,7 @@ function SlokaList() {
                     })}
                     </Stack>
 
+                    {sloka.length!==0 && 
                     <Box sx={{ display: "flex", justifyContent: "center",marginBottom:"30px"}}>
                         {sloka.length!=0 && 
                             <Button variant="contained" sx={{background:"linear-gradient(90deg, #a04e4e 0%, #a04e4e 100.33%)"}}
@@ -188,7 +189,7 @@ function SlokaList() {
                     <ArrowForwardIosIcon fontSize="small" />
                 </Button>
             }
-          </Box>
+          </Box>}
 
                 </Stack>
             </Stack>
